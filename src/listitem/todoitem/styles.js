@@ -6,15 +6,14 @@ const styles = StyleSheet.create({
         marginTop: 16,
         borderColor: '#bbb',
         borderWidth: 1,
-        borderStyle: 'dashed',
+        borderStyle: 'solid',
         borderRadius: 10,
         flexDirection: 'row',
+        flex: 1
     },
-    button: {
-        padding: 0,
-        margin: 0,
-        backgroundColor: 'red'
-    }
+    text: {
+        flex: 1
+    },
 })
 
 export default styles;

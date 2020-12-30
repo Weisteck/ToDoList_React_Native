@@ -6,10 +6,14 @@ import styles from './styles';
 const TodoItem = ({ item, pressHandler }) => {
 
     return (
-        <TouchableOpacity onPress={() => pressHandler(item.key)}>
+        <TouchableOpacity 
+        // onPress={() => pressHandler(item.key)}
+        >
             <View style={styles.item}>
-                <Text>{item.text}</Text>
-                <Icon name="minus-square-o" size={18} color="red"/>
+                <Text style={styles.text}>{item.text}</Text>
+                <Icon name="minus-square-o" size={18} color="red"
+                    onPress={() => pressHandler(item.key)}
+                />
             </View>
         </TouchableOpacity>
     )

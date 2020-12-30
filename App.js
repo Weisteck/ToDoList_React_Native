@@ -1,15 +1,19 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Header from './src/header'
 import ListItem from './src/listitem/main';
 
 export default function App() {
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <ListItem />
-    </View>
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss()
+    }}>
+      <View style={styles.container}>
+        <Header />
+        <ListItem />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

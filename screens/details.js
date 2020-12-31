@@ -1,20 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
+import Detail from '../src/detailitem/main'
 
-const Home = () => {
+const ViewDetail = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss()
     }}>
       <View style={styles.container}>
-        <Text> DEUXIEME ECRAN</Text>
+        <Detail navigation = { navigation }/>
       </View>
     </TouchableWithoutFeedback>
   );
 }
 
-export default Home;
+export default ViewDetail;
 
 const styles = StyleSheet.create({
   container: {

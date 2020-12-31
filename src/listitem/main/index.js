@@ -47,8 +47,8 @@ const ListItem = ({ navigation }) => {
         console.log(err)
       })
   }
-  
-  const pressDetail = () => navigation.navigate('Detail')
+
+  // const pressDetail = () => navigation.navigate('Detail', )
 
     return (
       <View style={styles.content}>
@@ -61,7 +61,7 @@ const ListItem = ({ navigation }) => {
             data={todo}
             keyExtractor={item => item.key}
             renderItem={({item}) => (
-            <TodoItem item = { item } pressHandler = { pressHandler } pressDetail = { pressDetail }/>
+            <TodoItem item = { item } pressHandler = { pressHandler } navigation = { navigation } submitHandler = { submitHandler }/>
             )}
             
           />

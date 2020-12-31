@@ -3,11 +3,12 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
-const TodoItem = ({ item, pressHandler, pressDetail }) => {
+const TodoItem = ({ item, pressHandler, navigation }) => {
     
     return (
         <TouchableOpacity 
-            onPress={pressDetail}
+            // onPress={pressDetail}
+            onPress={() => navigation.navigate('Detail', item)}
         >
             <View style={styles.item}>
                 <Text style={styles.text}>{item.text}</Text>

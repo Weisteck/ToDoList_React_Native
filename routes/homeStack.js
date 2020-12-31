@@ -5,10 +5,16 @@ import Detail from '../screens/details';
 
 const screens = {
     Home: {
-        screen: Home
+        screen: Home,
+        navigationOptions: {
+            title: 'To Do List App'
+        }
     },
     Detail: {
-        screen: Detail
+        screen: Detail,
+        navigationOptions: {
+            title: 'Détail de la tâche'
+        }
     }
 };
 

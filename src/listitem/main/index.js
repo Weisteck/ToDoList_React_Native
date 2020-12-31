@@ -1,56 +1,69 @@
-import React, { useState } from 'react';
-import { View, FlatList, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, Alert, Button } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from '../todoitem';
 import AddTodo from '../addtodoitem';
-import styles from './styles'
+import styles from './styles';
 
-const ListItem = () => {
+const ListItem = ({ navigation }) => {
 
-    const [todo, setTodo] = useState([
-        {text: 'acheter', key: '1' },
-        {text: 'boire', key: '2' },
-        {text: 'jouer', key: '3' }
-      ]);
+  const [todo, setTodo] = useState([]);
 
-    const pressHandler = (key) => {
-        setTodo((prevTodo) => {
-          return prevTodo.filter(todo => todo.key != key);
-        })
-    }
+  useEffect(() => {
+    restoreTodo()
+  },)
 
-    const submitHandler = (text) => {
+  const pressHandler = (key) => {
+    const newTodo = todo.filter(todo => todo.key !== key)
+    setTodo(newTodo)
+    storeTodo(newTodo)
+  }
 
-        if(text.length > 2){
-          setTodo((prevTodo) => {
-            return [
-              { text: text, key: Math.random().toString() },
-              ...prevTodo
-            ]
-          }) 
-        } else if(text.length == 0) {
-          Alert.alert('alerte1', 'La tâche ne peut pas être vide flemmard !', [
-            {text: 'Ok je me bouge !'}
-          ])
-        } else if(text.length == 1) {
-          Alert.alert('alerte2', 'Quelle tâche peut contenir 1 caractère ?', [
-            {text: 'Wouah tu es dure !'}
-          ])
-        } else {
-          Alert.alert('alerte3', 'Tu es presque ! Encore 1 caractère...', [
-            {text: 'Relou'}
-          ])
-        }
-      }
+  const submitHandler = text => {
+    if (text.length === 0) return;
+    const key = Math.random().toString()
+    const newTodo = [{ text, key }, ...todo]
+    setTodo(newTodo)
+    storeTodo(newTodo)
+  }
+
+  const asyncStorageKey = '@todos'
+
+  const storeTodo = newTodo => {
+    const stringifiedTodo = JSON.stringify(newTodo)
+    AsyncStorage.setItem(asyncStorageKey, stringifiedTodo).catch(err => {
+      console.log(err)
+    })
+  }
+
+  const restoreTodo = () => {
+    AsyncStorage.getItem(asyncStorageKey)
+      .then(stringifiedTodo => {
+        const parsedTodo = JSON.parse(stringifiedTodo)
+        if (!parsedTodo || typeof parsedTodo !== 'object') return;
+        setTodo(parsedTodo)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  
+  const pressDetail = () => navigation.navigate('Detail')
 
     return (
       <View style={styles.content}>
-        <AddTodo submitHandler = { submitHandler }/>
+        <AddTodo 
+          submitHandler = { submitHandler }
+          // setItemStorage = { setItemStorage }
+        />
         <View style={styles.list}>
           <FlatList 
             data={todo}
+            keyExtractor={item => item.key}
             renderItem={({item}) => (
-            <TodoItem item = { item } pressHandler = { pressHandler }/>
+            <TodoItem item = { item } pressHandler = { pressHandler } pressDetail = { pressDetail }/>
             )}
+            
           />
         </View>
       </View>
